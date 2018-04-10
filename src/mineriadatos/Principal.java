@@ -23,6 +23,7 @@ public class Principal extends javax.swing.JFrame {
  
     public Principal() {
         initComponents();
+        // aldo was here
     }
     
     @SuppressWarnings("unchecked")
