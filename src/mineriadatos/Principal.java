@@ -24,6 +24,7 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         // aldo was here
+        //aldo was here for the second time
     }
     
     @SuppressWarnings("unchecked")
