@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -57,6 +58,9 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTDescripcion = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPUnivariable = new javax.swing.JPanel();
+        jPBivariable = new javax.swing.JPanel();
         jMSalir = new javax.swing.JMenuBar();
         jMArchivo = new javax.swing.JMenu();
         jMAbrir = new javax.swing.JMenuItem();
@@ -173,15 +177,43 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTabbedPane1.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+
+        javax.swing.GroupLayout jPUnivariableLayout = new javax.swing.GroupLayout(jPUnivariable);
+        jPUnivariable.setLayout(jPUnivariableLayout);
+        jPUnivariableLayout.setHorizontalGroup(
+            jPUnivariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1280, Short.MAX_VALUE)
+        );
+        jPUnivariableLayout.setVerticalGroup(
+            jPUnivariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 630, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Univariable", jPUnivariable);
+
+        javax.swing.GroupLayout jPBivariableLayout = new javax.swing.GroupLayout(jPBivariable);
+        jPBivariable.setLayout(jPBivariableLayout);
+        jPBivariableLayout.setHorizontalGroup(
+            jPBivariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1280, Short.MAX_VALUE)
+        );
+        jPBivariableLayout.setVerticalGroup(
+            jPBivariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 630, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Bivariable", jPBivariable);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1285, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 665, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
         );
 
         jTab.addTab("Analisis", jPanel1);
@@ -247,6 +279,7 @@ public class Principal extends javax.swing.JFrame {
             try {
               relacion = a.abrirArchivo(archivo);
               agregarAVentana(relacion);
+              marcarError(2,2);
               //a.evaluaExpRegular(relacion);
             } catch (IOException ex) {
                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
@@ -325,6 +358,10 @@ public class Principal extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void marcarError(int f, int c){
+  
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBEditAtributos;
@@ -345,6 +382,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMGuardarcomo;
     private javax.swing.JMenuBar jMSalir;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JPanel jPBivariable;
+    private javax.swing.JPanel jPUnivariable;
     private javax.swing.JPanel jPanel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -356,6 +395,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextArea jTDescripcion;
     private javax.swing.JTextField jTRelacionText;
     private javax.swing.JTabbedPane jTab;
+    private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 
 }
