@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,6 +21,8 @@ import javax.swing.JTable;
  */
 public class Principal extends javax.swing.JFrame {
     Archivo a = new Archivo();
+    String ruta = new String();
+    Relacion relacionActual = null;
  
     public Principal() {
         initComponents();
@@ -38,15 +41,21 @@ public class Principal extends javax.swing.JFrame {
         jTDatos = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
         jLRelacion = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTDescripcion = new javax.swing.JTextPane();
         jLDescripcion = new javax.swing.JLabel();
-        jLRelaciontext = new javax.swing.JLabel();
         jCBEditar = new javax.swing.JCheckBox();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jLstAtributos = new javax.swing.JList<>();
         jLRelaciontext1 = new javax.swing.JLabel();
         jLRelacion1 = new javax.swing.JLabel();
+        jTRelacionText = new javax.swing.JTextField();
+        jLCantidadAtributos = new javax.swing.JLabel();
+        jLCantidadInstancias = new javax.swing.JLabel();
+        jBEditAtributos = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTDescripcion = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         jMSalir = new javax.swing.JMenuBar();
         jMArchivo = new javax.swing.JMenu();
@@ -83,31 +92,20 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTDatos);
 
         jExplorar.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 970, 430));
-        jExplorar.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 1280, 10));
+        jExplorar.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 1280, 10));
 
         jLRelacion.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLRelacion.setForeground(new java.awt.Color(0, 0, 153));
         jLRelacion.setText("Relación");
         jExplorar.add(jLRelacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
 
-        jTDescripcion.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        jTDescripcion.setText("Este es un ejemplo de la descripcion que sera presente siempre que se cargue un archivo ");
-        jTDescripcion.setEnabled(false);
-        jScrollPane2.setViewportView(jTDescripcion);
-
-        jExplorar.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 890, 80));
-
         jLDescripcion.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLDescripcion.setForeground(new java.awt.Color(0, 0, 153));
         jLDescripcion.setText("Descripción");
         jExplorar.add(jLDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
 
-        jLRelaciontext.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        jLRelaciontext.setText("Ninguna");
-        jExplorar.add(jLRelaciontext, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, -1, -1));
-
         jCBEditar.setBackground(new java.awt.Color(255, 255, 255));
-        jCBEditar.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        jCBEditar.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         jCBEditar.setText("Editar");
         jCBEditar.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -119,10 +117,10 @@ public class Principal extends javax.swing.JFrame {
                 jCBEditarActionPerformed(evt);
             }
         });
-        jExplorar.add(jCBEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 60, -1, -1));
+        jExplorar.add(jCBEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 90, -1, -1));
 
-        jList1.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        jScrollPane3.setViewportView(jList1);
+        jLstAtributos.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jScrollPane3.setViewportView(jLstAtributos);
 
         jExplorar.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 210, 250, 320));
 
@@ -133,6 +131,43 @@ public class Principal extends javax.swing.JFrame {
         jLRelacion1.setForeground(new java.awt.Color(0, 0, 153));
         jLRelacion1.setText("Atributos");
         jExplorar.add(jLRelacion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 170, -1, -1));
+
+        jTRelacionText.setEditable(false);
+        jTRelacionText.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jTRelacionText.setText("Ninguna");
+        jExplorar.add(jTRelacionText, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 740, -1));
+
+        jLCantidadAtributos.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        jLCantidadAtributos.setText("Cantidad de atributos:");
+        jExplorar.add(jLCantidadAtributos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 600, -1, -1));
+
+        jLCantidadInstancias.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        jLCantidadInstancias.setText("Cantidad de instancias:");
+        jExplorar.add(jLCantidadInstancias, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 570, -1, -1));
+
+        jBEditAtributos.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        jBEditAtributos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mineriadatos/iconos/Edit Property_40px.png"))); // NOI18N
+        jBEditAtributos.setActionCommand("Editar  atributos");
+        jBEditAtributos.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jExplorar.add(jBEditAtributos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 40, 50, 50));
+
+        jLabel1.setText("Editar atributos");
+        jExplorar.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 100, -1, -1));
+
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jExplorar.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, -20, 10, 170));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mineriadatos/iconos/Edit_40px.png"))); // NOI18N
+        jExplorar.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 40, -1, -1));
+
+        jTDescripcion.setColumns(20);
+        jTDescripcion.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jTDescripcion.setRows(20);
+        jTDescripcion.setText("No se ha cargado archivo...");
+        jTDescripcion.setToolTipText("");
+        jScrollPane4.setViewportView(jTDescripcion);
+
+        jExplorar.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 910, 100));
 
         jTab.addTab("Explorar", jExplorar);
 
@@ -155,7 +190,7 @@ public class Principal extends javax.swing.JFrame {
 
         getContentPane().add(jPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 700));
 
-        jMSalir.setBackground(new java.awt.Color(102, 102, 102));
+        jMSalir.setBackground(new java.awt.Color(0, 153, 153));
         jMSalir.setFont(new java.awt.Font("lcmssb8", 0, 15)); // NOI18N
 
         jMArchivo.setForeground(new java.awt.Color(255, 255, 255));
@@ -208,9 +243,11 @@ public class Principal extends javax.swing.JFrame {
         Relacion relacion = new Relacion();
         if(seleccion==JFileChooser.APPROVE_OPTION){
             File archivo = fc.getSelectedFile();
+            ruta = archivo.getPath();
             try {
               relacion = a.abrirArchivo(archivo);
               agregarAVentana(relacion);
+              //a.evaluaExpRegular(relacion);
             } catch (IOException ex) {
                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
            }
@@ -218,17 +255,47 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMAbrirActionPerformed
 
     public void agregarAVentana(Relacion r){
-        this.jLRelaciontext.setText(r.getRelacion());
+        relacionActual = r;
+        
+        Atributo[] listaAtributos = r.getAtributos();
+        String[] listaAtributosN = new String[listaAtributos.length];
+        
+        this.jTDescripcion.setText(r.descripcionToString());
+        this.jTRelacionText.setText(r.getRelacion());
         this.jTDatos.setModel(r.getDatos());
+        for(int i = 0 ; i<listaAtributos.length ; i++){
+            String nombre = listaAtributos[i].getNombre();
+            String tipo = listaAtributos[i].getTipo();
+            listaAtributosN[i] = nombre + " - " + tipo;
+        }
+        this.jLstAtributos.setListData(listaAtributosN);
+        this.jLCantidadAtributos.setText("Cantidad de atributos: " + r.getAtributos().length);
+        this.jLCantidadInstancias.setText("Cantidad de Instancias: " + r.getDatos().getRowCount());
         //this.jTDatos.addRow();
     }
     
     private void jMGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMGuardarActionPerformed
-        // TODO add your handling code here:
+        relacionActual.clear();
+        relacionActual.setRelacion(this.jTRelacionText.getText());
+        relacionActual.setDescripcion(this.jTDescripcion.getText().split("\n"));
+        relacionActual.setDatos((DefaultTableModel) this.jTDatos.getModel());
+        a.guardar(relacionActual, ruta);
     }//GEN-LAST:event_jMGuardarActionPerformed
 
     private void jMGuardarcomoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMGuardarcomoActionPerformed
-        // TODO add your handling code here:
+        String auxRuta = new String();
+        JFileChooser fc=new JFileChooser();
+        int seleccion=fc.showSaveDialog(this);
+        if(JFileChooser.APPROVE_OPTION == seleccion){
+            File f = fc.getSelectedFile();
+            auxRuta = f.getPath()+".txt";
+       
+            relacionActual.clear();
+            relacionActual.setRelacion(this.jTRelacionText.getText());
+            relacionActual.setDescripcion(this.jTDescripcion.getText());
+            relacionActual.setDatos((DefaultTableModel) this.jTDatos.getModel());
+            a.guardarComo(relacionActual, auxRuta);
+        }
     }//GEN-LAST:event_jMGuardarcomoActionPerformed
 
     private void jCBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBEditarActionPerformed
@@ -238,10 +305,12 @@ public class Principal extends javax.swing.JFrame {
     private void jCBEditarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCBEditarStateChanged
         if(this.jCBEditar.isSelected()){
             this.jTDatos.setEnabled(true);
-            this.jTDescripcion.setEnabled(true);
+            this.jTDescripcion.setEditable(true);
+            this.jTRelacionText.setEditable(true);
         }else{
             this.jTDatos.setEnabled(false);
-            this.jTDescripcion.setEnabled(false);
+            this.jTDescripcion.setEditable(false);
+            this.jTRelacionText.setEditable(false);
         }
         
     }//GEN-LAST:event_jCBEditarStateChanged
@@ -258,14 +327,18 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBEditAtributos;
     private javax.swing.JCheckBox jCBEditar;
     private javax.swing.JPanel jExplorar;
+    private javax.swing.JLabel jLCantidadAtributos;
+    private javax.swing.JLabel jLCantidadInstancias;
     private javax.swing.JLabel jLDescripcion;
     private javax.swing.JLabel jLRelacion;
     private javax.swing.JLabel jLRelacion1;
-    private javax.swing.JLabel jLRelaciontext;
     private javax.swing.JLabel jLRelaciontext1;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JList<String> jLstAtributos;
     private javax.swing.JMenuItem jMAbrir;
     private javax.swing.JMenu jMArchivo;
     private javax.swing.JMenuItem jMGuardar;
@@ -275,11 +348,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTDatos;
-    private javax.swing.JTextPane jTDescripcion;
+    private javax.swing.JTextArea jTDescripcion;
+    private javax.swing.JTextField jTRelacionText;
     private javax.swing.JTabbedPane jTab;
     // End of variables declaration//GEN-END:variables
 

@@ -30,4 +30,7 @@ public class Atributo {
     public String getTipo(){return tipo;}
     public String getDominio(){return dominio;}
 
+    public String toString(){
+        return  nombre + " " + tipo + " " + dominio;
+    }
 }
