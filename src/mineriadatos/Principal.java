@@ -61,6 +61,7 @@ public class Principal extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPUnivariable = new javax.swing.JPanel();
         jPBivariable = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jMSalir = new javax.swing.JMenuBar();
         jMArchivo = new javax.swing.JMenu();
         jMAbrir = new javax.swing.JMenuItem();
@@ -192,15 +193,23 @@ public class Principal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Univariable", jPUnivariable);
 
+        jLabel3.setText("Seleccione los atributos");
+
         javax.swing.GroupLayout jPBivariableLayout = new javax.swing.GroupLayout(jPBivariable);
         jPBivariable.setLayout(jPBivariableLayout);
         jPBivariableLayout.setHorizontalGroup(
             jPBivariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1280, Short.MAX_VALUE)
+            .addGroup(jPBivariableLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addContainerGap(1133, Short.MAX_VALUE))
         );
         jPBivariableLayout.setVerticalGroup(
             jPBivariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 630, Short.MAX_VALUE)
+            .addGroup(jPBivariableLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addContainerGap(601, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Bivariable", jPBivariable);
@@ -213,7 +222,7 @@ public class Principal extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         jTab.addTab("Analisis", jPanel1);
@@ -375,6 +384,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLRelaciontext1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JList<String> jLstAtributos;
     private javax.swing.JMenuItem jMAbrir;
     private javax.swing.JMenu jMArchivo;
