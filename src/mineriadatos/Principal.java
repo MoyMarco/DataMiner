@@ -513,6 +513,11 @@ public class Principal extends javax.swing.JFrame {
                 //obtener los dominios de los atributos
                 dominioA = row[indxA].getDominio();
                 dominioB = row[indxB].getDominio();
+                //comprobar que el dominio no sea una ER sino un conjunto
+                if(!dominioA.startsWith("(") || !dominioB.startsWith("(")){
+                    this.txtAreaResBivariable.setText("Dominio incompatible");
+                    return;
+                }
                 //limpiar de parentesis
                 dominioA = dominioA.replace("(","");
                 dominioA = dominioA.replace(")","");
