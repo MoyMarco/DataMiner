@@ -6,6 +6,7 @@
 package mineriadatos;
 
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.util.List;
 import java.io.File;
 import java.io.FileReader;
@@ -20,7 +21,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -713,8 +718,8 @@ public class Principal extends javax.swing.JFrame {
        list.remove(selectedIndex);
        relacionActual.setAtributos(list.toArray(new Atributo[list.size()]));
        //eliminar los valores de los atributos del vector de datos
-       Vector row;
-       Vector row2;
+       //Vector row;
+       //Vector row2;
        //no se porque pero borrando este pedazo funcionó :v
 //       for(int i = 0; i<relacionActual.getDatos().getDataVector().size();i++){
 //           row = (Vector) relacionActual.getDatos().getDataVector().elementAt(i);
@@ -728,7 +733,35 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnBuscayRemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscayRemActionPerformed
         // TODO add your handling code here:
-        
+        int selectedAtrib = this.jLstAtributos.getSelectedIndex();
+        if(selectedAtrib < 0){
+            JOptionPane.showMessageDialog(this.btnBuscayRem, "Seleccione un atributo de la lista anterior","Error",2);
+        }else{
+            JTextField buscar = new JTextField("");
+            JTextField reemplazar = new JTextField("");
+            JPanel panel = new JPanel(new GridLayout(0, 1));
+            panel.add(new JLabel("Buscar:"));
+            panel.add(buscar);
+            panel.add(new JLabel("Reemplazar:"));
+            panel.add(reemplazar);
+            int result = JOptionPane.showConfirmDialog(null, panel, "Buscar y reemplazar",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+                //sacar datos del defaultTableModel
+                for(int i = 0; i<relacionActual.getDatos().getDataVector().size();i++){
+                    Vector row = (Vector) relacionActual.getDatos().getDataVector().elementAt(i);
+                    if(row.get(selectedAtrib+1).equals(buscar.getText())){
+                        row.set(selectedAtrib+1, reemplazar.getText());
+                        relacionActual.getDatos().getDataVector().set(i, row);
+                    }
+                }
+                this.jTDatos.setEnabled(true);
+                this.jTDatos.setModel(relacionActual.getDatos());
+                this.jTDatos.setEnabled(false);
+            } else {
+                System.out.println("Cancelled");
+            }
+        }
     }//GEN-LAST:event_btnBuscayRemActionPerformed
 
     /**
