@@ -16,7 +16,7 @@ public class Relacion {
     private String[] descripcion = new String[0];
     private Atributo[] atributos = new Atributo[0];
     private DefaultTableModel datos = new DefaultTableModel();
-    private char valorFaltante;
+    private char valorFaltante = '?';
     public Relacion(){}
     
     public Relacion(String relacion, Atributo[] atributos, DefaultTableModel datos, char valorFaltante){
@@ -31,8 +31,13 @@ public class Relacion {
     public void setDatos(DefaultTableModel datos){this.datos = datos;}
     public void setDescripcion(String[] descripcion){this.descripcion = descripcion;}
     public void setValorFaltante(char valorFaltante){this.valorFaltante = valorFaltante;}
+    
     public void clear(){descripcion = new String[0]; }
     
+    public void setAtributosEnPosicion(int posicion, Atributo atributo){
+        atributo.setTipo(atributos[posicion].getTipo());
+        atributos[posicion] = atributo;
+    }
     
     public String getRelacion(){return relacion;}
     public Atributo[] getAtributos(){return atributos;}

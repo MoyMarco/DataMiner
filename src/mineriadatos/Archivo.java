@@ -94,7 +94,11 @@ public class Archivo {
             relacion.setAtributo(atributo);
         }
         if(palabra.trim().equals("MISSINGVALUE")){
-            valorFaltante = resto.trim().charAt(0);
+            try{
+                valorFaltante = resto.trim().charAt(0);
+            }catch(Exception e){
+                valorFaltante = '?';
+            }
             relacion.setValorFaltante(valorFaltante);
         }        
         if(palabra.trim().equals("DATA")){
@@ -144,97 +148,90 @@ public class Archivo {
     }
     
     public void guardar (Relacion r, String ruta){
-       if (r != null){
-            FileWriter fichero = null;
-            PrintWriter pw = null;
-            try{
-                fichero = new FileWriter(ruta);
-                pw = new PrintWriter(fichero);
-                String[] descripcion = r.getDescripcion();
-                Atributo[] atributos = r.getAtributos();
-                DefaultTableModel datos = r.getDatos();
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try{
+            fichero = new FileWriter(ruta);
+            pw = new PrintWriter(fichero);
+            String[] descripcion = r.getDescripcion();
+            Atributo[] atributos = r.getAtributos();
+            DefaultTableModel datos = r.getDatos();
                 
-                for(int i = 0 ; i < descripcion.length ; i++){
-                    pw.println("%%" + descripcion[i]);
-                }
-                pw.println("@RELATION " + r.getRelacion());
-                for(int i = 0 ; i < atributos.length ; i++){
-                    pw.println("@ATTRIBUTE " +atributos[i].toString());
-                }
-                pw.println("@DATA");
-                for(int f = 0 ; f<datos.getRowCount() ; f++){
-                    for(int c = 1 ; c<datos.getColumnCount() ; c++){
-                        if(c == 1){
-                             pw.print(datos.getValueAt(f, c));
-                        }else{
-                            pw.print("," + datos.getValueAt(f, c));
-                        }
+            for(int i = 0 ; i < descripcion.length ; i++){
+                pw.println("%%" + descripcion[i]);
+            }
+            pw.println("@RELATION " + r.getRelacion());
+            for(int i = 0 ; i < atributos.length ; i++){
+                pw.println("@ATTRIBUTE " +atributos[i].toString());
+            }
+            pw.println("@MISSINGVALUE " + r.getValorFaltante());
+            pw.println("@DATA");
+            for(int f = 0 ; f<datos.getRowCount() ; f++){
+                for(int c = 1 ; c<datos.getColumnCount() ; c++){
+                    if(c == 1){
+                        pw.print(datos.getValueAt(f, c));
+                    }else{
+                        pw.print("," + datos.getValueAt(f, c));
                     }
-                    pw.println();
                 }
+                pw.println();
+            }
                     //pw.println("Linea " + i);
-                } catch (Exception e) {
-                e.printStackTrace();   
-            } finally {
-                try {
+        } catch (Exception e) {
+            e.printStackTrace();   
+        } finally {
+            try {
            // Nuevamente aprovechamos el finally para 
            // asegurarnos que se cierra el fichero.
-                    if (null != fichero)
-                        fichero.close();
-                    } catch (Exception e2) {
-                        e2.printStackTrace();
-                }
+                if (null != fichero)
+                    fichero.close();
+                } catch (Exception e2) {
+                    e2.printStackTrace();
             }
-        }else{
-           JOptionPane.showMessageDialog(null, "Aun no se ha cargado alguna base de datos ");
         }
     }
     
-    public void guardarComo (Relacion r, String ruta
-    ){
-        if (r != null){
-            FileWriter fichero = null;
-            PrintWriter pw = null;
-            try{
-                fichero = new FileWriter(ruta);
-                pw = new PrintWriter(fichero);
-                String[] descripcion = r.getDescripcion();
-                Atributo[] atributos = r.getAtributos();
-                DefaultTableModel datos = r.getDatos();
+    public void guardarComo (Relacion r, String ruta){
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try{
+            fichero = new FileWriter(ruta);
+            pw = new PrintWriter(fichero);
+            String[] descripcion = r.getDescripcion();
+            Atributo[] atributos = r.getAtributos();
+            DefaultTableModel datos = r.getDatos();
                 
-                for(int i = 0 ; i < descripcion.length ; i++){
-                    pw.println("%%" + descripcion[i]);
-                }
-                pw.println("@relation " + r.getRelacion());
-                for(int i = 0 ; i < atributos.length ; i++){
-                    pw.println(atributos[i].toString());
-                }
-                pw.println("@data");
-                for(int f = 0 ; f<datos.getRowCount() ; f++){
-                    for(int c = 1 ; c<datos.getColumnCount() ; c++){
-                        if(c == 1){
-                             pw.print(datos.getValueAt(f, c));
-                        }else{
-                            pw.print("," + datos.getValueAt(f, c));
-                        }
+            for(int i = 0 ; i < descripcion.length ; i++){
+                pw.println("%%" + descripcion[i]);
+            }
+            pw.println("@RELATION " + r.getRelacion());
+            for(int i = 0 ; i < atributos.length ; i++){
+                pw.println("@ATTRIBUTE " + atributos[i].toString());
+            }
+            pw.println("@MISSINGVALUE " + r.getValorFaltante());
+            pw.println("@DATA");
+            for(int f = 0 ; f<datos.getRowCount() ; f++){
+                for(int c = 1 ; c<datos.getColumnCount() ; c++){
+                    if(c == 1){
+                        pw.print(datos.getValueAt(f, c));
+                    }else{
+                        pw.print("," + datos.getValueAt(f, c));
                     }
-                    pw.println();
                 }
-                    //pw.println("Linea " + i);
-                } catch (Exception e) {
-                e.printStackTrace();   
-            } finally {
-                try {
+                pw.println();
+            }
+              //pw.println("Linea " + i);
+        } catch (Exception e) {
+            e.printStackTrace();   
+        } finally {
+            try {
            // Nuevamente aprovechamos el finally para 
            // asegurarnos que se cierra el fichero.
-                    if (null != fichero)
-                        fichero.close();
-                    } catch (Exception e2) {
-                        e2.printStackTrace();
-                }
+                if (null != fichero)
+                    fichero.close();
+            } catch (Exception e2) {
+                e2.printStackTrace();
             }
-        }else{
-           JOptionPane.showMessageDialog(null, "Aun no se ha cargado alguna base de datos ");
         }
     }
     
