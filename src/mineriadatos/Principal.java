@@ -6,22 +6,29 @@
 package mineriadatos;
 
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.util.List;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.jfree.chart.ChartFactory;
@@ -70,8 +77,6 @@ public class Principal extends javax.swing.JFrame {
         jLCantidadInstancias = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTDescripcion = new javax.swing.JTextArea();
         jTERAtributo = new javax.swing.JTextField();
         jTNombreAtributo = new javax.swing.JTextField();
         jLRelacion2 = new javax.swing.JLabel();
@@ -80,6 +85,12 @@ public class Principal extends javax.swing.JFrame {
         jBEliminarInstancia = new javax.swing.JButton();
         jBAgregarInstancia = new javax.swing.JButton();
         jLRelacion5 = new javax.swing.JLabel();
+        btnEliminaAtrib = new javax.swing.JButton();
+        btnBuscayRem = new javax.swing.JButton();
+        jLRelacion11 = new javax.swing.JLabel();
+        jLRelacion12 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTDescripcion = new javax.swing.JTextPane();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPUnivariable = new javax.swing.JPanel();
@@ -90,6 +101,15 @@ public class Principal extends javax.swing.JFrame {
         jLRelacion6 = new javax.swing.JLabel();
         jLRelacion7 = new javax.swing.JLabel();
         jPBivariable = new javax.swing.JPanel();
+        jLRelacion8 = new javax.swing.JLabel();
+        jLRelacion9 = new javax.swing.JLabel();
+        comboBoxBiv1 = new javax.swing.JComboBox<>();
+        comboBoxBiv2 = new javax.swing.JComboBox<>();
+        jLRelacion10 = new javax.swing.JLabel();
+        btnEvalueBiv = new javax.swing.JButton();
+        jScrollPane = new javax.swing.JScrollPane();
+        txtAreaResBivariable = new javax.swing.JTextArea();
+        jLRelacion13 = new javax.swing.JLabel();
         jMSalir = new javax.swing.JMenuBar();
         jMArchivo = new javax.swing.JMenu();
         jMAbrir = new javax.swing.JMenuItem();
@@ -107,6 +127,7 @@ public class Principal extends javax.swing.JFrame {
         jTab.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
 
         jPrincipal.setBackground(new java.awt.Color(255, 255, 255));
+        jPrincipal.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         jPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTDatos.setFont(new java.awt.Font("SansSerif", 0, 15)); // NOI18N
@@ -150,7 +171,7 @@ public class Principal extends javax.swing.JFrame {
                 jCBEditarActionPerformed(evt);
             }
         });
-        jPrincipal.add(jCBEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 80, -1, -1));
+        jPrincipal.add(jCBEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 90, -1, -1));
 
         jLstAtributos.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLstAtributos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -160,7 +181,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jLstAtributos);
 
-        jPrincipal.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 210, 250, 270));
+        jPrincipal.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 210, 250, 240));
 
         jLRelaciontext1.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         jPrincipal.add(jLRelaciontext1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 210, -1, -1));
@@ -171,7 +192,7 @@ public class Principal extends javax.swing.JFrame {
         jLRelacion1.setToolTipText("");
         jLRelacion1.setAutoscrolls(true);
         jLRelacion1.setFocusTraversalPolicyProvider(true);
-        jPrincipal.add(jLRelacion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 560, -1, -1));
+        jPrincipal.add(jLRelacion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 580, -1, -1));
 
         jTRelacionText.setEditable(false);
         jTRelacionText.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -180,32 +201,23 @@ public class Principal extends javax.swing.JFrame {
 
         jLCantidadAtributos.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         jLCantidadAtributos.setText("Cantidad de atributos:");
-        jPrincipal.add(jLCantidadAtributos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 620, -1, -1));
+        jPrincipal.add(jLCantidadAtributos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 630, -1, -1));
 
         jLCantidadInstancias.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         jLCantidadInstancias.setText("Cantidad de instancias:");
-        jPrincipal.add(jLCantidadInstancias, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 600, -1, -1));
+        jPrincipal.add(jLCantidadInstancias, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 610, -1, -1));
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jPrincipal.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, -20, 30, 170));
+        jPrincipal.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, -20, 30, 170));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mineriadatos/iconos/Edit_40px.png"))); // NOI18N
-        jPrincipal.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 20, -1, -1));
-
-        jTDescripcion.setColumns(20);
-        jTDescripcion.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jTDescripcion.setRows(20);
-        jTDescripcion.setText("No se ha cargado archivo...");
-        jTDescripcion.setToolTipText("");
-        jScrollPane4.setViewportView(jTDescripcion);
-
-        jPrincipal.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 860, 100));
+        jPrincipal.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 30, -1, -1));
 
         jTERAtributo.setEditable(false);
-        jPrincipal.add(jTERAtributo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 560, 190, -1));
+        jPrincipal.add(jTERAtributo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 580, 190, -1));
 
         jTNombreAtributo.setEditable(false);
-        jPrincipal.add(jTNombreAtributo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 530, 190, -1));
+        jPrincipal.add(jTNombreAtributo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 550, 190, -1));
 
         jLRelacion2.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLRelacion2.setForeground(new java.awt.Color(0, 0, 153));
@@ -225,7 +237,7 @@ public class Principal extends javax.swing.JFrame {
         jLRelacion4.setToolTipText("");
         jLRelacion4.setAutoscrolls(true);
         jLRelacion4.setFocusTraversalPolicyProvider(true);
-        jPrincipal.add(jLRelacion4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 530, -1, -1));
+        jPrincipal.add(jLRelacion4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 550, -1, -1));
 
         jBEliminarInstancia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mineriadatos/iconos/Minus_30px.png"))); // NOI18N
         jBEliminarInstancia.setEnabled(false);
@@ -250,7 +262,44 @@ public class Principal extends javax.swing.JFrame {
         jLRelacion5.setText("Editar atributos");
         jLRelacion5.setToolTipText("");
         jLRelacion5.setAutoscrolls(true);
-        jPrincipal.add(jLRelacion5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 490, -1, -1));
+        jPrincipal.add(jLRelacion5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 460, -1, -1));
+
+        btnEliminaAtrib.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mineriadatos/iconos/Delete View_30px.png"))); // NOI18N
+        btnEliminaAtrib.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminaAtribActionPerformed(evt);
+            }
+        });
+        jPrincipal.add(btnEliminaAtrib, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 460, 50, 50));
+
+        btnBuscayRem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mineriadatos/iconos/Clear Search_30px.png"))); // NOI18N
+        btnBuscayRem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscayRemActionPerformed(evt);
+            }
+        });
+        jPrincipal.add(btnBuscayRem, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 30, 50, 50));
+
+        jLRelacion11.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLRelacion11.setForeground(new java.awt.Color(0, 0, 153));
+        jLRelacion11.setText("Eliminar");
+        jLRelacion11.setToolTipText("");
+        jLRelacion11.setAutoscrolls(true);
+        jLRelacion11.setFocusTraversalPolicyProvider(true);
+        jPrincipal.add(jLRelacion11, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 510, -1, -1));
+
+        jLRelacion12.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLRelacion12.setForeground(new java.awt.Color(0, 0, 153));
+        jLRelacion12.setText("Buscar y remplazar");
+        jLRelacion12.setToolTipText("");
+        jLRelacion12.setAutoscrolls(true);
+        jLRelacion12.setFocusTraversalPolicyProvider(true);
+        jPrincipal.add(jLRelacion12, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 90, -1, -1));
+
+        jScrollPane2.setEnabled(false);
+        jScrollPane2.setViewportView(jTDescripcion);
+
+        jPrincipal.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 870, 90));
 
         jTab.addTab("Explorar", jPrincipal);
 
@@ -307,16 +356,56 @@ public class Principal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Univariable", jPUnivariable);
 
-        javax.swing.GroupLayout jPBivariableLayout = new javax.swing.GroupLayout(jPBivariable);
-        jPBivariable.setLayout(jPBivariableLayout);
-        jPBivariableLayout.setHorizontalGroup(
-            jPBivariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1280, Short.MAX_VALUE)
-        );
-        jPBivariableLayout.setVerticalGroup(
-            jPBivariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 630, Short.MAX_VALUE)
-        );
+        jPBivariable.setBackground(new java.awt.Color(255, 255, 255));
+        jPBivariable.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLRelacion8.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLRelacion8.setForeground(new java.awt.Color(0, 0, 153));
+        jLRelacion8.setText("vs");
+        jPBivariable.add(jLRelacion8, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, -1, -1));
+
+        jLRelacion9.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLRelacion9.setForeground(new java.awt.Color(0, 0, 153));
+        jLRelacion9.setText("Seleccione atributos");
+        jPBivariable.add(jLRelacion9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+
+        comboBoxBiv1.setFont(new java.awt.Font("SansSerif", 0, 15)); // NOI18N
+        jPBivariable.add(comboBoxBiv1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 230, 30));
+
+        comboBoxBiv2.setFont(new java.awt.Font("SansSerif", 0, 15)); // NOI18N
+        jPBivariable.add(comboBoxBiv2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 230, 30));
+
+        jLRelacion10.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLRelacion10.setForeground(new java.awt.Color(0, 0, 153));
+        jLRelacion10.setText("Resultados");
+        jPBivariable.add(jLRelacion10, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 40, -1, -1));
+
+        btnEvalueBiv.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnEvalueBiv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mineriadatos/iconos/Work_30px.png"))); // NOI18N
+        btnEvalueBiv.setToolTipText("");
+        btnEvalueBiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEvalueBivActionPerformed(evt);
+            }
+        });
+        jPBivariable.add(btnEvalueBiv, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 369, 50, 50));
+
+        jScrollPane.setEnabled(false);
+
+        txtAreaResBivariable.setColumns(20);
+        txtAreaResBivariable.setFont(new java.awt.Font("Monospaced", 0, 16)); // NOI18N
+        txtAreaResBivariable.setRows(5);
+        jScrollPane.setViewportView(txtAreaResBivariable);
+
+        jPBivariable.add(jScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 110, 700, 350));
+
+        jLRelacion13.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLRelacion13.setForeground(new java.awt.Color(0, 0, 153));
+        jLRelacion13.setText("Evaluar");
+        jLRelacion13.setToolTipText("");
+        jLRelacion13.setAutoscrolls(true);
+        jLRelacion13.setFocusTraversalPolicyProvider(true);
+        jPBivariable.add(jLRelacion13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, -1, -1));
 
         jTabbedPane1.addTab("Bivariable", jPBivariable);
 
@@ -408,16 +497,28 @@ public class Principal extends javax.swing.JFrame {
         Atributo[] listaAtributos = r.getAtributos();
         String[] listaAtributosN = new String[listaAtributos.length];
         
+        this.comboBoxBiv1.removeAllItems();
+        this.comboBoxBiv2.removeAllItems();
+        
         this.jTDescripcion.setText(r.descripcionToString());
         this.jTRelacionText.setText(r.getRelacion());
         this.jTDatos.setModel(r.getDatos());
+     
         for(int i = 0 ; i<listaAtributos.length ; i++){
             String nombre = listaAtributos[i].getNombre();
+            this.comboBoxBiv1.addItem(listaAtributos[i].getNombre());
+            this.comboBoxBiv2.addItem(listaAtributos[i].getNombre());
+            
             String tipo = listaAtributos[i].getTipo();
             listaAtributosN[i] = nombre + " - " + tipo;
         }
-        this.jLstAtributos.setListData(listaAtributosN);
-        this.jLstAtributos1.setListData(listaAtributosN);
+        DefaultListModel model = new DefaultListModel();
+        for(String val : listaAtributosN){
+            model.addElement(val);
+        }
+        //this.jLstAtributos.setListData(listaAtributosN);
+        this.jLstAtributos.setModel(model);
+        this.jLstAtributos1.setModel(model);
         this.jLCantidadAtributos.setText("Cantidad de atributos: " + r.getAtributos().length);
         this.jLCantidadInstancias.setText("Cantidad de Instancias: " + r.getDatos().getRowCount());
         //this.jTDatos.addRow();
@@ -448,7 +549,7 @@ public class Principal extends javax.swing.JFrame {
        
                 relacionActual.clear();
                 relacionActual.setRelacion(this.jTRelacionText.getText());
-                relacionActual.setDescripcion(this.jTDescripcion.getText());
+                relacionActual.setDescripcion(this.jTDescripcion.getText().split("\n"));
                 relacionActual.setDatos((DefaultTableModel) this.jTDatos.getModel());
                 a.guardarComo(relacionActual, auxRuta);
             }
@@ -502,8 +603,10 @@ public class Principal extends javax.swing.JFrame {
             leerNuevosDatos();
             relacionActual.setAtributosEnPosicion(posicionAtributoEnLista, atributo);
             posicionAtributoEnLista = this.jLstAtributos.getSelectedIndex();
-            this.jTNombreAtributo.setText(relacionActual.getAtributos()[this.jLstAtributos.getSelectedIndex()].getNombre()); 
-            this.jTERAtributo.setText(relacionActual.getAtributos()[this.jLstAtributos.getSelectedIndex()].getDominio()); 
+            if(this.jLstAtributos.getSelectedIndex() != -1){
+                this.jTNombreAtributo.setText(relacionActual.getAtributos()[this.jLstAtributos.getSelectedIndex()].getNombre()); 
+                this.jTERAtributo.setText(relacionActual.getAtributos()[this.jLstAtributos.getSelectedIndex()].getDominio());
+            }
         }
     }//GEN-LAST:event_jLstAtributosValueChanged
 
@@ -541,7 +644,7 @@ public class Principal extends javax.swing.JFrame {
         
         DefaultBoxAndWhiskerCategoryDataset dataset = new DefaultBoxAndWhiskerCategoryDataset();
         
-        if("BINARY".equals(tipoAtributo) || "ORDINAL".equals(tipoAtributo) || "NOMINAL".equals(tipoAtributo) || "CATEGORIC".equals(tipoAtributo)){
+        if("BINARY".equals(tipoAtributo.toUpperCase()) || "ORDINAL".equals(tipoAtributo.toUpperCase()) || "NOMINAL".equals(tipoAtributo.toUpperCase()) || "CATEGORIC".equals(tipoAtributo.toUpperCase())){
            for(int i = 0 ; i < listaValores.size() ; i++){
                for (int j = 0 ; j < modelo.getRowCount() ; j++){
                     if(modelo.getValueAt(j, posicionAtributo).equals(listaValores.get(i))){
@@ -555,7 +658,7 @@ public class Principal extends javax.swing.JFrame {
            
            grafica = ChartFactory.createBarChart3D(relacionActual.getRelacion(), nombreAtributo, "Frecuencia", datos, PlotOrientation.HORIZONTAL, true, true, true);
            //grafica = ChartFactory.createBarChart(relacionActual.getRelacion(), nombreAtributo, "Frecuencia", datos);
-        }else if("NUMERIC".equals(tipoAtributo) || "DISCRETE".equals(tipoAtributo) || "CONTINUOUS".equals(tipoAtributo)){
+        }else if("NUMERIC".equals(tipoAtributo.toUpperCase()) || "DISCRETE".equals(tipoAtributo.toUpperCase()) || "CONTINUOUS".equals(tipoAtributo.toUpperCase())){
             
             
             for(int i = 0; i<relacionActual.getDatos().getDataVector().size();i++){
@@ -563,20 +666,28 @@ public class Principal extends javax.swing.JFrame {
                 lista.add(Double.parseDouble(row.get(posicionAtributo).toString()));
                
             }
-            media = lista.stream().mapToDouble(val->val).average().getAsDouble();
-            System.out.println(media);
+            media = lista.stream().mapToDouble(val->val).average().getAsDouble(); 
             dataset.add(lista, nombreAtributo, nombreAtributo);
+            dataset.add(lista, "1", nombreAtributo);
+            dataset.add(lista, "2", nombreAtributo);
+            dataset.add(lista, "3", nombreAtributo);
+            dataset.add(lista, "4", nombreAtributo);
             
-            grafica = ChartFactory.createBoxAndWhiskerChart(relacionActual.getRelacion(), nombreAtributo, valor, dataset, false);
+            grafica = ChartFactory.createBoxAndWhiskerChart(relacionActual.getRelacion(), "Atributo", "Valores", dataset, false);
+            //this.add(new JLabel("Media: " + getMean(lista.toArray(new Double[lista.size()]))));
+            System.out.println( getMean(lista.toArray(new Double[lista.size()])));
         }
         
-    
+        
         ChartPanel panel = new ChartPanel(grafica);
+        
         //this.getContentPane().add(panel);
         //this.pack();
+      
         JFrame Ventana = new JFrame("JFreeChart");
         Ventana.getContentPane().add(panel);
         Ventana.pack();
+       // Ventana.setBounds(800, 500, 500, 800);
         Ventana.setVisible(true);
         Ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -601,6 +712,320 @@ public class Principal extends javax.swing.JFrame {
     private void jLstAtributos1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jLstAtributos1ValueChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_jLstAtributos1ValueChanged
+
+    private void btnEvalueBivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEvalueBivActionPerformed
+        //revisar y analizar
+        //Sets para aceptar posibles valores futuros
+        Set<String> numericos = new HashSet<>();
+        numericos.add("numeric");
+        numericos.add("discrete");
+        numericos.add("continuous");
+        Set<String> categoricos = new HashSet<>();
+        categoricos.add("binary");
+        categoricos.add("ordinal");
+        categoricos.add("nominal");
+        categoricos.add("categoric");
+        int indxA;
+        int indxB;
+        Atributo[] listaAtributos = relacionActual.getAtributos();
+        Atributo A;
+        Atributo B;
+        indxA = this.comboBoxBiv1.getSelectedIndex();
+        indxB = this.comboBoxBiv2.getSelectedIndex();
+        A = listaAtributos[indxA];
+        B = listaAtributos[indxB];
+        if((numericos.contains(A.getTipo()) || categoricos.contains(A.getTipo()))
+                && (numericos.contains(A.getTipo()) || categoricos.contains(B.getTipo()))){
+            //los tipos de dato estan en formato aceptable
+            //revisar si son numerico vs numerico o cat vs cat
+            if(numericos.contains(A.getTipo()) && numericos.contains(B.getTipo())){
+                //si ambos son numericos calcular correlacion de pearson---------------------------
+                //calcular las sigmas
+                double mediaA;
+                double mediaB;
+                double sumatoriaA = 0;
+                double sumatoriaB = 0;
+                double sigmaA;
+                double sigmaB;
+                double pearson = 0;
+                List<Double> listA = new ArrayList<>();
+                List<Double> listB = new ArrayList<>();
+                Vector row;
+                String result;
+                //sacar datos del defaultTableModel para calcular promedio
+                for(int i = 0; i<relacionActual.getDatos().getDataVector().size();i++){
+                    row = (Vector) relacionActual.getDatos().getDataVector().elementAt(i);
+                    listA.add(Double.parseDouble(row.get(indxA+1).toString()));
+                    listB.add(Double.parseDouble(row.get(indxB+1).toString()));
+                }
+                //calcular las medias
+                mediaA = listA.stream().mapToDouble(val->val).average().getAsDouble();
+                mediaB = listB.stream().mapToDouble(val->val).average().getAsDouble();
+                for(int i = 0; i<relacionActual.getDatos().getDataVector().size();i++){
+                    sumatoriaA += Math.pow((listA.get(i)-mediaA),2);
+                    sumatoriaB += Math.pow((listB.get(i)-mediaB),2);
+                }
+                //calcular sigmas
+                sigmaA = Math.sqrt((sumatoriaA/relacionActual.getDatos().getDataVector().size()));
+                sigmaB = Math.sqrt((sumatoriaB/relacionActual.getDatos().getDataVector().size()));
+                //calcular el coeficiente de pearson
+                for(int i = 0; i<relacionActual.getDatos().getDataVector().size();i++){
+                    pearson += ( (listA.get(i)-mediaA)*(listB.get(i)-mediaB) );
+                }
+                pearson = pearson / (relacionActual.getDatos().getDataVector().size()*sigmaA*sigmaB);
+                result = "Numerico VS Numerico\nCoeficiente de correlacion = "+pearson+"\n";
+                if(pearson==(-1)){
+                    result += "Correlacion negativa perfecta";
+                }else if(pearson<(-0.5) && pearson>(-1)){
+                    result += "Correlacion Negativa";
+                }else if(pearson>(-0.5) && pearson<(0.5)){
+                    result += "No existe correlacion";
+                }else if(pearson>(0.5) && pearson <1){
+                    result += "Correlacion positiva";
+                }else if(pearson == 1){
+                    result += "Correlacion positiva perfecta";
+                }
+                this.txtAreaResBivariable.setText(result);
+            }else if (categoricos.contains(A.getTipo()) && categoricos.contains(B.getTipo())){
+                //cat vs cat--------------------------------------------------------
+                //prueba chi-cuadrada y coeficiente Tschuprow
+                StringTokenizer st;
+                List<List<Integer>> matrizContingencia = new ArrayList<List<Integer>>();
+                List<List<Double>> matrizEsperadas = new ArrayList<List<Double>>();
+                double equisCuadrada;
+                double tschuprow;
+                List<String> posiblesValoresA = new ArrayList<>();//dominio de valores de A
+                List<String> posiblesValoresB = new ArrayList<>();//dominio de  valores B
+                String dominioA;
+                String dominioB;
+                Atributo[] row;
+                row = relacionActual.getAtributos();
+                //obtener los dominios de los atributos
+                dominioA = row[indxA].getDominio();
+                dominioB = row[indxB].getDominio();
+                //comprobar que el dominio no sea una ER sino un conjunto
+                if(!dominioA.startsWith("(") || !dominioB.startsWith("(")){
+                    this.txtAreaResBivariable.setText("Dominio incompatible");
+                    return;
+                }
+                //limpiar de parentesis
+                dominioA = dominioA.replace("(","");
+                dominioA = dominioA.replace(")","");
+                dominioB = dominioB.replace("(","");
+                dominioB = dominioB.replace(")","");
+                //separarlos y guardar en listas
+                st = new StringTokenizer(dominioA);
+                while (st.hasMoreTokens()) {  
+                    posiblesValoresA.add(st.nextToken("|").trim());
+                }  
+                st = new StringTokenizer(dominioB);
+                while (st.hasMoreTokens()) {  
+                    posiblesValoresB.add(st.nextToken("|").trim());
+                }
+                //crear y llenar la tabla de contingencia  con 0
+                //(ultima fila y columna contienen totales
+                for(int i = 0;i<posiblesValoresB.size()+1;i++){
+                    matrizContingencia.add(new ArrayList<Integer>());
+                    for(int b=0;b<posiblesValoresA.size()+1;b++){
+                        matrizContingencia.get(i).add(0);
+                    }
+                }
+                //contar y llenar la tabla de contingencia con datos
+                Vector rowV;
+                int coordEsperadaA = -1;
+                int coordEsperadaB = -1;
+                for(int i = 0; i<relacionActual.getDatos().getDataVector().size();i++){
+                    rowV = (Vector) relacionActual.getDatos().getDataVector().elementAt(i);
+                    for(int b=0;b<posiblesValoresB.size();b++){
+                        if(posiblesValoresB.get(b).equals(rowV.get(indxB+1))){
+                            coordEsperadaB = b;
+                            break;
+                        }
+                    }
+                    for(int a=0;a<posiblesValoresA.size();a++){
+                        if(posiblesValoresA.get(a).equals(rowV.get(indxA+1))){
+                            coordEsperadaA = a;
+                            break;
+                        }
+                    }
+                    if(coordEsperadaB != -1 && coordEsperadaA != -1){
+                        int anterior = matrizContingencia.get(coordEsperadaB).get(coordEsperadaA);
+                        anterior++;
+                        matrizContingencia.get(coordEsperadaB).set(coordEsperadaA, anterior);
+                    }
+                    coordEsperadaA = -1;
+                    coordEsperadaB = -1;
+                }
+                //llenar los totales de la tabla de contingencia
+                //(ultima fila y columna
+                int totalColumna = 0;
+                int totalFila = 0;
+                for(int i=0;i<posiblesValoresB.size();i++){
+                    List<Integer> fila = matrizContingencia.get(i);
+                    for(int a=0;a<posiblesValoresA.size();a++){
+                        totalFila += fila.get(a);
+                    }
+                    fila.set(fila.size()-1, totalFila);
+                    totalFila = 0;
+                }
+                for(int i=0;i<posiblesValoresA.size();i++){
+                    for(int a=0;a<posiblesValoresB.size();a++){
+                        List<Integer> fila = matrizContingencia.get(a);
+                        totalColumna += fila.get(i);
+                    }
+                    matrizContingencia.get(posiblesValoresB.size()).set(i, totalColumna);
+                    totalColumna=0;
+                }
+                //hacer la comprobacion de que las sumas totales horizontal y vertical sean iguales
+                int totalVertical = 0;
+                int totalHorizontal = 0;
+                for(int i=0;i<posiblesValoresB.size();i++){
+                    totalVertical += matrizContingencia.get(i).get(posiblesValoresB.size());
+                }
+                for(int i=0;i<posiblesValoresA.size();i++){
+                    totalHorizontal += matrizContingencia.get(posiblesValoresB.size()).get(i);
+                }
+                //si los dos totales son iguales, proceder
+                if(totalHorizontal == totalVertical){
+                    //calcular la matriz de frecuencias esperadas
+                    for(int b = 0;b<posiblesValoresB.size();b++){
+                        matrizEsperadas.add(new ArrayList<Double>());
+                        for(int a=0;a<posiblesValoresA.size();a++){
+                            double valor;
+                            valor = matrizContingencia.get(b).get(posiblesValoresA.size())
+                                    * matrizContingencia.get(posiblesValoresB.size()).get(a);
+                            valor = valor/totalVertical;
+                            matrizEsperadas.get(b).add(valor);
+                            valor = 0;
+                        }
+                    }
+                    //calcular la equis cuadrada :D
+                    equisCuadrada = 0;
+                    for(int b=0;b<posiblesValoresB.size();b++){
+                        for(int a=0;a<posiblesValoresA.size();a++){
+                            double r;
+                            r = matrizContingencia.get(b).get(a)-matrizEsperadas.get(b).get(a);
+                            r = Math.pow(r, 2);
+                            r = r/matrizEsperadas.get(b).get(a);
+                            equisCuadrada += r;
+                            r=0;
+                        }
+                    }
+                    //calcular coeficiente de tschuprow
+                    tschuprow = 0;
+                    double denom;
+                    denom = (posiblesValoresA.size() - 1)*(posiblesValoresB.size() -1);
+                    denom = Math.sqrt(denom);
+                    denom = totalVertical * denom;
+                    tschuprow = Math.sqrt((equisCuadrada/denom));
+                    if(tschuprow == 0){
+                        this.txtAreaResBivariable.setText("cat vs cat\n"+""
+                                + "Coeficiente de Tschuprow = "+tschuprow+ ""
+                                        + "\nCompleta Independencia");
+                    }else if(tschuprow >= 0.9){
+                        this.txtAreaResBivariable.setText("cat vs cat\n"+""
+                                + "Coeficiente de Tschuprow = "+tschuprow+ ""
+                                        + "\nCompleta Dependencia");
+                    }else if (tschuprow > 0 && tschuprow <0.9){
+                        this.txtAreaResBivariable.setText("cat vs cat\n"+""
+                                + "Coeficiente de Tschuprow = "+tschuprow);
+                    }          
+                }
+            }else{
+                //en este caso son numerico vs cat, incompatibles
+                this.txtAreaResBivariable.setText("incompatibles");
+            }
+        }else{
+            //los tipos de dato estan en formato inaceptable, enviar mensaje de error
+            this.txtAreaResBivariable.setText("error en tipos de dato");
+        }
+    }//GEN-LAST:event_btnEvalueBivActionPerformed
+
+    private void btnEliminaAtribActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminaAtribActionPerformed
+        //eliminar atributo de lista de atributos
+        if(this.jLstAtributos.getSelectedIndex()<0){
+             JOptionPane.showMessageDialog(this.btnBuscayRem, "Seleccione un atributo de la lista anterior","Error",2);
+             return;
+        }
+        int selectedIndex = this.jLstAtributos.getSelectedIndex();
+        DefaultListModel model = (DefaultListModel) this.jLstAtributos.getModel();
+        if (selectedIndex != -1) {
+            model.remove(selectedIndex);
+        }
+        //eliminar de la tabla de datos
+        int nRow= this.jTDatos.getRowCount();
+        int nCol= this.jTDatos.getColumnCount()-1;
+        Object[][] cells= new Object[nRow][nCol];
+        String[] names= new String[nCol];
+
+        for(int j=0; j<nCol; j++){
+            if(j<selectedIndex+1){
+                names[j]= this.jTDatos.getColumnName(j);
+                for(int i=0; i<nRow; i++){
+                    cells[i][j]= this.jTDatos.getValueAt(i, j);
+                }
+            }else{
+                names[j]= this.jTDatos.getColumnName(j+1);
+                for(int i=0; i<nRow; i++){
+                    cells[i][j]= this.jTDatos.getValueAt(i, j+1);
+                }
+            }
+        }
+        DefaultTableModel newModel= new DefaultTableModel(cells, names);
+        this.jTDatos.setModel(newModel);
+        this.jTNombreAtributo.setText("");
+        this.jTERAtributo.setText("");
+        relacionActual.setDatos(newModel);
+        //eliminar el atributo de la relacion actual
+       ArrayList<Atributo> list = new ArrayList(Arrays.asList(
+       relacionActual.getAtributos()));
+       list.remove(selectedIndex);
+       relacionActual.setAtributos(list.toArray(new Atributo[list.size()]));
+       //eliminar los valores de los atributos del vector de datos
+       //Vector row;
+       //Vector row2;
+       //no se porque pero borrando este pedazo funcionó :v
+//       for(int i = 0; i<relacionActual.getDatos().getDataVector().size();i++){
+//           row = (Vector) relacionActual.getDatos().getDataVector().elementAt(i);
+//           i++;i--;
+//           row.remove(selectedIndex+1);
+//           relacionActual.getDatos().getDataVector().set(i, row);
+//       }
+       
+       agregarAVentana(relacionActual);
+    }//GEN-LAST:event_btnEliminaAtribActionPerformed
+
+    private void btnBuscayRemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscayRemActionPerformed
+        int selectedAtrib = this.jLstAtributos.getSelectedIndex();
+        if(selectedAtrib < 0){
+            JOptionPane.showMessageDialog(this.btnBuscayRem, "Seleccione un atributo de la lista anterior","Error",2);
+        }else{
+            JTextField buscar = new JTextField("");
+            JTextField reemplazar = new JTextField("");
+            JPanel panel = new JPanel(new GridLayout(0, 1));
+            panel.add(new JLabel("Buscar:"));
+            panel.add(buscar);
+            panel.add(new JLabel("Reemplazar:"));
+            panel.add(reemplazar);
+            int result = JOptionPane.showConfirmDialog(null, panel, "Buscar y reemplazar",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+                //sacar datos del defaultTableModel
+                for(int i = 0; i<relacionActual.getDatos().getDataVector().size();i++){
+                    Vector row = (Vector) relacionActual.getDatos().getDataVector().elementAt(i);
+                    if(row.get(selectedAtrib+1).equals(buscar.getText())){
+                        row.set(selectedAtrib+1, reemplazar.getText());
+                        relacionActual.getDatos().getDataVector().set(i, row);
+                    }
+                }
+                this.jTDatos.setEnabled(true);
+                this.jTDatos.setModel(relacionActual.getDatos());
+                this.jTDatos.setEnabled(false);
+            } else {
+                System.out.println("Cancelled");
+            }
+        }
+    }//GEN-LAST:event_btnBuscayRemActionPerformed
 
     private void leerNuevosDatos(){
         DefaultTableModel modelo = relacionActual.getDatos();
@@ -630,6 +1055,11 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscayRem;
+    private javax.swing.JButton btnEliminaAtrib;
+    private javax.swing.JButton btnEvalueBiv;
+    private javax.swing.JComboBox<String> comboBoxBiv1;
+    private javax.swing.JComboBox<String> comboBoxBiv2;
     private javax.swing.JButton jBAgregarInstancia;
     private javax.swing.JButton jBEliminarInstancia;
     private javax.swing.JButton jButton1;
@@ -639,12 +1069,18 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLDescripcion;
     private javax.swing.JLabel jLRelacion;
     private javax.swing.JLabel jLRelacion1;
+    private javax.swing.JLabel jLRelacion10;
+    private javax.swing.JLabel jLRelacion11;
+    private javax.swing.JLabel jLRelacion12;
+    private javax.swing.JLabel jLRelacion13;
     private javax.swing.JLabel jLRelacion2;
     private javax.swing.JLabel jLRelacion3;
     private javax.swing.JLabel jLRelacion4;
     private javax.swing.JLabel jLRelacion5;
     private javax.swing.JLabel jLRelacion6;
     private javax.swing.JLabel jLRelacion7;
+    private javax.swing.JLabel jLRelacion8;
+    private javax.swing.JLabel jLRelacion9;
     private javax.swing.JLabel jLRelaciontext1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jLstAtributos;
@@ -661,19 +1097,59 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPrincipal;
+    private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTDatos;
-    private javax.swing.JTextArea jTDescripcion;
+    private javax.swing.JTextPane jTDescripcion;
     private javax.swing.JTextField jTERAtributo;
     private javax.swing.JTextField jTNombreAtributo;
     private javax.swing.JTextField jTRelacionText;
     private javax.swing.JTabbedPane jTab;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextArea txtAreaResBivariable;
     // End of variables declaration//GEN-END:variables
 
+    
+     
+
+    double getMean(double[] datos) {
+        double[] data = datos;
+        int size = data.length; 
+        double sum = 0.0;
+        for(double a : data)
+            sum += a;
+        return sum/size;
+    }
+
+    double getVariance(double[] datos) {
+        double[] data = datos;
+        int size= data.length; 
+        double mean = getMean(datos);
+        double temp = 0;
+        for(double a :data)
+            temp += (a-mean)*(a-mean);
+        return temp/(size-1);
+    }
+
+    double getStdDev(double[] datos) {
+        double[] data = datos;
+    int size= data.length; 
+        return Math.sqrt(getVariance(datos));
+    }
+
+    public double median(double[] datos) {
+        double[] data =datos;
+    int size= data.length; 
+       Arrays.sort(data);
+
+       if (data.length % 2 == 0) {
+          return (data[(data.length / 2) - 1] + data[data.length / 2]) / 2.0;
+       } 
+       return data[data.length / 2];
+    }
 }
