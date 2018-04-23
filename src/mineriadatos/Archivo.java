@@ -3,7 +3,6 @@
  */
 package mineriadatos;
 
-import java.awt.List;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,10 +11,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -138,9 +133,7 @@ public class Archivo {
         BufferedReader b = new BufferedReader(f);
         
         while((cadena = b.readLine())!=null) {
-            identificarEtiqueta(cadena/*.toUpperCase()*/);
-            //System.out.println(cadena);
-            //System.out.println(palabra);
+            identificarEtiqueta(cadena);
         }
         leerDatos();
         b.close();
@@ -176,7 +169,6 @@ public class Archivo {
                 }
                 pw.println();
             }
-                    //pw.println("Linea " + i);
         } catch (Exception e) {
             e.printStackTrace();   
         } finally {
@@ -220,7 +212,6 @@ public class Archivo {
                 }
                 pw.println();
             }
-              //pw.println("Linea " + i);
         } catch (Exception e) {
             e.printStackTrace();   
         } finally {
@@ -233,23 +224,5 @@ public class Archivo {
                 e2.printStackTrace();
             }
         }
-    }
-    
-    /*public void evaluaExpRegular(Atributo r, int f, int c){
-        //List<int> posicionesErroneas = new ArrayList<int>();
-        Atributo[] atributos = r.getAtributos();
-        Pattern[] patrones = new Pattern[atributos.length];
-        DefaultTableModel datos = r.getDatos();
-        
-        for(int i = 0; i< atributos.length;i++){
-            patrones[i] = Pattern.compile(atributos[i].getDominio()); 
-        }
-        for(int f = 0 ; f< datos.getRowCount() ; f++){
-            for(int c = 1 ; c < datos.getColumnCount() ; c++){
-                
-            }
-        }
-        Matcher matcher = patron.matcher();
-    }*/
+    }   
 }
-                        //JOptionPane.showMessageDialog(null, "existen errores en la estructura del archivo");

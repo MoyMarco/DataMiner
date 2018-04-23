@@ -5,16 +5,17 @@
  */
 package mineriadatos;
 
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.List;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -27,15 +28,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.statistics.DefaultBoxAndWhiskerCategoryDataset;
 
@@ -51,8 +49,6 @@ public class Principal extends javax.swing.JFrame {
  
     public Principal() {
         initComponents();
-        // aldo was here
-        //aldo was here for the second time
     }
     
     @SuppressWarnings("unchecked")
@@ -63,7 +59,7 @@ public class Principal extends javax.swing.JFrame {
         jTab = new javax.swing.JTabbedPane();
         jPrincipal = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTDatos = new javax.swing.JTable();
+        jTDatos = new DTable();
         jSeparator1 = new javax.swing.JSeparator();
         jLRelacion = new javax.swing.JLabel();
         jLDescripcion = new javax.swing.JLabel();
@@ -95,11 +91,16 @@ public class Principal extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPUnivariable = new javax.swing.JPanel();
         jPGrafica = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jLMedia = new javax.swing.JLabel();
+        jLMediana = new javax.swing.JLabel();
+        jLDesvEst = new javax.swing.JLabel();
+        jLModa = new javax.swing.JLabel();
+        btnGraficar = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         jLstAtributos1 = new javax.swing.JList<>();
         jLRelacion6 = new javax.swing.JLabel();
         jLRelacion7 = new javax.swing.JLabel();
+        jLRelacion15 = new javax.swing.JLabel();
         jPBivariable = new javax.swing.JPanel();
         jLRelacion8 = new javax.swing.JLabel();
         jLRelacion9 = new javax.swing.JLabel();
@@ -310,26 +311,58 @@ public class Principal extends javax.swing.JFrame {
         jPUnivariable.setBackground(new java.awt.Color(255, 255, 255));
         jPUnivariable.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLMedia.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLMedia.setForeground(new java.awt.Color(0, 0, 153));
+        jLMedia.setText("Media: ");
+
+        jLMediana.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLMediana.setForeground(new java.awt.Color(0, 0, 153));
+        jLMediana.setText("Mediana: ");
+
+        jLDesvEst.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLDesvEst.setForeground(new java.awt.Color(0, 0, 153));
+        jLDesvEst.setText("Desviacion estandar: ");
+
+        jLModa.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLModa.setForeground(new java.awt.Color(0, 0, 153));
+        jLModa.setText("Moda(s): ");
+
         javax.swing.GroupLayout jPGraficaLayout = new javax.swing.GroupLayout(jPGrafica);
         jPGrafica.setLayout(jPGraficaLayout);
         jPGraficaLayout.setHorizontalGroup(
             jPGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPGraficaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLMediana, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLDesvEst, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                    .addComponent(jLModa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPGraficaLayout.setVerticalGroup(
             jPGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPGraficaLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jLMedia)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLMediana)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLDesvEst)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLModa)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPUnivariable.add(jPGrafica, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 50, 550, 510));
+        jPUnivariable.add(jPGrafica, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 50, 550, 170));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mineriadatos/iconos/Pie Chart_30px.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnGraficar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mineriadatos/iconos/Pie Chart_30px.png"))); // NOI18N
+        btnGraficar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnGraficarActionPerformed(evt);
             }
         });
-        jPUnivariable.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 50, 50));
+        jPUnivariable.add(btnGraficar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 50, 50));
 
         jLstAtributos1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLstAtributos1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -353,6 +386,11 @@ public class Principal extends javax.swing.JFrame {
         jLRelacion7.setAutoscrolls(true);
         jLRelacion7.setFocusTraversalPolicyProvider(true);
         jPUnivariable.add(jLRelacion7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, -1, -1));
+
+        jLRelacion15.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLRelacion15.setForeground(new java.awt.Color(0, 0, 153));
+        jLRelacion15.setText("Resultados");
+        jPUnivariable.add(jLRelacion15, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 20, -1, -1));
 
         jTabbedPane1.addTab("Univariable", jPUnivariable);
 
@@ -476,7 +514,7 @@ public class Principal extends javax.swing.JFrame {
     private void jMAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMAbrirActionPerformed
         JFileChooser fc=new JFileChooser();
         int seleccion=fc.showOpenDialog(this);
-        Relacion relacion = new Relacion();
+        Relacion relacion;
         if(seleccion==JFileChooser.APPROVE_OPTION){
             File archivo = fc.getSelectedFile();
             ruta = archivo.getPath();
@@ -492,8 +530,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMAbrirActionPerformed
 
     public void agregarAVentana(Relacion r){
+        //actualiza datos de la ventana cuando se modifica la relacion
         relacionActual = r;
-        
+        this.jTDatos.setRelacion(r);
         Atributo[] listaAtributos = r.getAtributos();
         String[] listaAtributosN = new String[listaAtributos.length];
         
@@ -516,12 +555,12 @@ public class Principal extends javax.swing.JFrame {
         for(String val : listaAtributosN){
             model.addElement(val);
         }
-        //this.jLstAtributos.setListData(listaAtributosN);
+        
         this.jLstAtributos.setModel(model);
         this.jLstAtributos1.setModel(model);
         this.jLCantidadAtributos.setText("Cantidad de atributos: " + r.getAtributos().length);
         this.jLCantidadInstancias.setText("Cantidad de Instancias: " + r.getDatos().getRowCount());
-        //this.jTDatos.addRow();
+        
     }
     
     private void jMGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMGuardarActionPerformed
@@ -626,7 +665,7 @@ public class Principal extends javax.swing.JFrame {
         agregarAVentana(relacionActual);
     }//GEN-LAST:event_jBEliminarInstanciaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnGraficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficarActionPerformed
         DefaultCategoryDataset datos = new DefaultCategoryDataset();
         JFreeChart grafica = null;
         String[] atributo = this.jLstAtributos1.getSelectedValue().split("-");
@@ -675,7 +714,20 @@ public class Principal extends javax.swing.JFrame {
             
             grafica = ChartFactory.createBoxAndWhiskerChart(relacionActual.getRelacion(), "Atributo", "Valores", dataset, false);
             //this.add(new JLabel("Media: " + getMean(lista.toArray(new Double[lista.size()]))));
-            System.out.println( getMean(lista.toArray(new Double[lista.size()])));
+            Double[] envia = new Double[lista.size()];
+            for (int i = 0; i <lista.size(); i++)
+                envia[i] = lista.get(i);
+            this.jLMedia.setText("Media: " + getMedia(envia));
+            this.jLMediana.setText("Mediana: " + getMediana(envia));
+            this.jLDesvEst.setText("Desviacion estandar: " + getDesvEst(envia));
+            List<Double> moda = getModa(envia);
+            if(moda != null){
+                this.jLModa.setText("Moda: " + moda);
+            }else{
+                this.jLModa.setText("No hay moda");
+            }
+            
+            System.out.println(getMedia(envia));
         }
         
         
@@ -690,7 +742,7 @@ public class Principal extends javax.swing.JFrame {
        // Ventana.setBounds(800, 500, 500, 800);
         Ventana.setVisible(true);
         Ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnGraficarActionPerformed
     
     public List<String> identificarPosiblesValores(int posicion){
         List<String> listaValores  = new ArrayList<>();
@@ -734,8 +786,9 @@ public class Principal extends javax.swing.JFrame {
         indxB = this.comboBoxBiv2.getSelectedIndex();
         A = listaAtributos[indxA];
         B = listaAtributos[indxB];
+        try{
         if((numericos.contains(A.getTipo()) || categoricos.contains(A.getTipo()))
-                && (numericos.contains(A.getTipo()) || categoricos.contains(B.getTipo()))){
+                && (numericos.contains(B.getTipo()) || categoricos.contains(B.getTipo()))){
             //los tipos de dato estan en formato aceptable
             //revisar si son numerico vs numerico o cat vs cat
             if(numericos.contains(A.getTipo()) && numericos.contains(B.getTipo())){
@@ -836,6 +889,7 @@ public class Principal extends javax.swing.JFrame {
                 int coordEsperadaB = -1;
                 for(int i = 0; i<relacionActual.getDatos().getDataVector().size();i++){
                     rowV = (Vector) relacionActual.getDatos().getDataVector().elementAt(i);
+                    
                     for(int b=0;b<posiblesValoresB.size();b++){
                         if(posiblesValoresB.get(b).equals(rowV.get(indxB+1))){
                             coordEsperadaB = b;
@@ -939,6 +993,9 @@ public class Principal extends javax.swing.JFrame {
             //los tipos de dato estan en formato inaceptable, enviar mensaje de error
             this.txtAreaResBivariable.setText("error en tipos de dato");
         }
+        }catch (Exception ex){
+            this.txtAreaResBivariable.setText("Error, faltan datos o hay corruptos");
+        }
     }//GEN-LAST:event_btnEvalueBivActionPerformed
 
     private void btnEliminaAtribActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminaAtribActionPerformed
@@ -981,16 +1038,6 @@ public class Principal extends javax.swing.JFrame {
        relacionActual.getAtributos()));
        list.remove(selectedIndex);
        relacionActual.setAtributos(list.toArray(new Atributo[list.size()]));
-       //eliminar los valores de los atributos del vector de datos
-       //Vector row;
-       //Vector row2;
-       //no se porque pero borrando este pedazo funcionó :v
-//       for(int i = 0; i<relacionActual.getDatos().getDataVector().size();i++){
-//           row = (Vector) relacionActual.getDatos().getDataVector().elementAt(i);
-//           i++;i--;
-//           row.remove(selectedIndex+1);
-//           relacionActual.getDatos().getDataVector().set(i, row);
-//       }
        
        agregarAVentana(relacionActual);
     }//GEN-LAST:event_btnEliminaAtribActionPerformed
@@ -1058,21 +1105,26 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscayRem;
     private javax.swing.JButton btnEliminaAtrib;
     private javax.swing.JButton btnEvalueBiv;
+    private javax.swing.JButton btnGraficar;
     private javax.swing.JComboBox<String> comboBoxBiv1;
     private javax.swing.JComboBox<String> comboBoxBiv2;
     private javax.swing.JButton jBAgregarInstancia;
     private javax.swing.JButton jBEliminarInstancia;
-    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCBEditar;
     private javax.swing.JLabel jLCantidadAtributos;
     private javax.swing.JLabel jLCantidadInstancias;
     private javax.swing.JLabel jLDescripcion;
+    private javax.swing.JLabel jLDesvEst;
+    private javax.swing.JLabel jLMedia;
+    private javax.swing.JLabel jLMediana;
+    private javax.swing.JLabel jLModa;
     private javax.swing.JLabel jLRelacion;
     private javax.swing.JLabel jLRelacion1;
     private javax.swing.JLabel jLRelacion10;
     private javax.swing.JLabel jLRelacion11;
     private javax.swing.JLabel jLRelacion12;
     private javax.swing.JLabel jLRelacion13;
+    private javax.swing.JLabel jLRelacion15;
     private javax.swing.JLabel jLRelacion2;
     private javax.swing.JLabel jLRelacion3;
     private javax.swing.JLabel jLRelacion4;
@@ -1104,7 +1156,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    /*
     private javax.swing.JTable jTDatos;
+    */
+    private DTable jTDatos;
     private javax.swing.JTextPane jTDescripcion;
     private javax.swing.JTextField jTERAtributo;
     private javax.swing.JTextField jTNombreAtributo;
@@ -1114,11 +1169,35 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextArea txtAreaResBivariable;
     // End of variables declaration//GEN-END:variables
 
+    List<Double> getModa(Double[] datos){
+        Map<Double, Integer> m = new HashMap<Double, Integer>();
+        for(double elemento:datos){
+            if(m.containsKey(elemento)){
+                m.put(elemento,m.get(elemento)+1);                
+            }else{
+                m.put(elemento, 1);
+            }
+        }
+        int repeticiones = 0;
+        List<Double> moda = new ArrayList<Double>();
+        Iterator<Entry<Double,Integer>> iterador = m.entrySet().iterator();
+        while (iterador.hasNext()) {	      
+            Entry<Double,Integer> e = iterador.next();	    	
+            if (e.getValue() > repeticiones) {
+              moda.clear();
+              moda.add(e.getKey());
+              repeticiones = e.getValue();
+            } else if (e.getValue() == repeticiones)
+              moda.add(e.getKey());  
+        }
+        if (moda.size() == datos.length)
+        return null;
+        else
+        return moda;
+    }
     
-     
-
-    double getMean(double[] datos) {
-        double[] data = datos;
+    double getMedia(Double[] datos) {
+        Double[] data = datos;
         int size = data.length; 
         double sum = 0.0;
         for(double a : data)
@@ -1126,30 +1205,29 @@ public class Principal extends javax.swing.JFrame {
         return sum/size;
     }
 
-    double getVariance(double[] datos) {
-        double[] data = datos;
+    double getVarianza(Double[] datos) {
+        Double[] data = datos;
         int size= data.length; 
-        double mean = getMean(datos);
-        double temp = 0;
-        for(double a :data)
+        Double mean = getMedia(datos);
+        Double temp = 0.0;
+        for(Double a :data)
             temp += (a-mean)*(a-mean);
         return temp/(size-1);
     }
 
-    double getStdDev(double[] datos) {
-        double[] data = datos;
-    int size= data.length; 
-        return Math.sqrt(getVariance(datos));
+    double getDesvEst(Double[] datos) {
+        Double[] data = datos;
+        int size= data.length; 
+        return Math.sqrt(getVarianza(datos));
     }
 
-    public double median(double[] datos) {
-        double[] data =datos;
-    int size= data.length; 
-       Arrays.sort(data);
-
-       if (data.length % 2 == 0) {
-          return (data[(data.length / 2) - 1] + data[data.length / 2]) / 2.0;
-       } 
+     double getMediana(Double[] datos) {
+        Double[] data =datos;
+        int size= data.length; 
+        Arrays.sort(data);
+        if (data.length % 2 == 0) {
+           return (data[(data.length / 2) - 1] + data[data.length / 2]) / 2.0;
+        } 
        return data[data.length / 2];
     }
 }
