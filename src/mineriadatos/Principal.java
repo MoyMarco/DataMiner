@@ -578,7 +578,7 @@ public class Principal extends javax.swing.JFrame {
     private void jMGuardarcomoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMGuardarcomoActionPerformed
         
         if(relacionActual != null){
-            String auxRuta = new String();
+            String auxRuta;
        
             JFileChooser fc=new JFileChooser();
             int seleccion=fc.showSaveDialog(this);
@@ -659,7 +659,6 @@ public class Principal extends javax.swing.JFrame {
 
     private void jBEliminarInstanciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarInstanciaActionPerformed
         DefaultTableModel modelo = relacionActual.getDatos();
-        Vector os = null;
         modelo.removeRow(this.jTDatos.getSelectedRow());
         relacionActual.setDatos(modelo);
         agregarAVentana(relacionActual);
@@ -934,7 +933,7 @@ public class Principal extends javax.swing.JFrame {
                 int totalVertical = 0;
                 int totalHorizontal = 0;
                 for(int i=0;i<posiblesValoresB.size();i++){
-                    totalVertical += matrizContingencia.get(i).get(posiblesValoresB.size());
+                    totalVertical += matrizContingencia.get(i).get(posiblesValoresA.size());
                 }
                 for(int i=0;i<posiblesValoresA.size();i++){
                     totalHorizontal += matrizContingencia.get(posiblesValoresB.size()).get(i);
